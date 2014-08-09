@@ -1,5 +1,7 @@
 import urllib
 import json
+import sqlite3
+
 print "Enter the pincode of area that you want to see"
 pincode = raw_input("> ")
 print "Enter  the country name "
@@ -11,8 +13,24 @@ print  url1
 jdata = urllib.urlopen(url1)
 fp = json.load(jdata)
 #print fp["results"]
-print json.dumps([s['address_components'][2]['long_name'] for s in fp['results']], indent=2)
+city = json.dumps([s['address_components'][2]['long_name'] for s in fp['results']], indent=2)
+print city
+db = sqlite3.connect('mydb')
+print "opened databaase succesfully"
+
+cursor = db.cursor()
+#cursor.execute('''
+#   CREATE TABLE geoadd(city TEXT,
+#                       pincode INTE, country TEXT)
+#''')
+
+cursor.execute('''INSERT INTO geoadd(city,pincode,country) VALUES(?,?,?)''',(city,pincode,country))
+db.commit()
+cursor.execute('''select * from geoadd''')
+for row in cursor:
+    print (row)
+db.close()
 #print txt.read()
-print jdata.read()
+#print jdata.read()
 
 
