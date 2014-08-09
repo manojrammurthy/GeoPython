@@ -15,7 +15,7 @@ fp = json.load(jdata)
 #print fp["results"]
 city = json.dumps([s['address_components'][2]['long_name'] for s in fp['results']], indent=2)
 print city
-db = sqlite3.connect('workspace/GeoPython/db/mydb')
+db = sqlite3.connect('/home/lenovo/workspace/GeoPython/db/mydb')
 print "opened databaase succesfully"
 
 cursor = db.cursor()
