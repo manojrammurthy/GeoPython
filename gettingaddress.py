@@ -15,18 +15,19 @@ fp = json.load(jdata)
 #print fp["results"]
 city = json.dumps([s['address_components'][2]['long_name'] for s in fp['results']], indent=2)
 print city
-db = sqlite3.connect('mydb')
+db = sqlite3.connect('workspace/GeoPython/db/mydb')
 print "opened databaase succesfully"
 
 cursor = db.cursor()
-#cursor.execute('''
-#   CREATE TABLE geoadd(city TEXT,
-#                       pincode INTE, country TEXT)
-#''')
+cursor.execute('''
+   CREATE TABLE IF NOT EXISTS geoadd(city TEXT,
+                       pincode INTE, country TEXT)
+''')
 
 cursor.execute('''INSERT INTO geoadd(city,pincode,country) VALUES(?,?,?)''',(city,pincode,country))
 db.commit()
 cursor.execute('''select * from geoadd''')
+
 for row in cursor:
     print (row)
 db.close()
