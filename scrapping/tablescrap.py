@@ -8,7 +8,7 @@ soup = BeautifulSoup(r)
 t = soup.find("table")
 for t1 in t.find_all('tr'):
     for cell in t1.find_all('td'):
-       print cell.find_all('a',title = "India",text=True)
+       print cell.find_all(text=True)
         #cells = t.find_all('td',text="India")
   
 
